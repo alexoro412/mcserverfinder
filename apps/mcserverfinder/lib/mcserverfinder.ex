@@ -15,7 +15,7 @@ defmodule MCServerFinder do
        {:active, true},
        {:add_membership, { Keyword.get(opts, :ip), {0,0,0,0} }}])
     {:ok, conn} = Redix.start_link(host: Keyword.get(opts, :redis_host), port: Keyword.get(opts, :redis_port))
-		{:ok, {sock, conn}}
+    {:ok, {sock, conn}}
 	end
 
 	def handle_info({:udp, _sock, {i1,i2,i3,i4}, _inport, packet}, {sock, conn}) do
@@ -26,8 +26,14 @@ defmodule MCServerFinder do
 				{:noreply, {sock, conn}}
 			[_, motd, port] ->
         key_name = "mc:#{i1}.#{i2}.#{i3}.#{i4}:#{port}:#{motd}"
+        IO.puts key_name
         {:ok, _} = Redix.command(conn, ["ZADD", "servers", time, key_name])
 				{:noreply, {sock, conn}}
 		end
 	end
+
+  def handle_info(r, state) do
+    IO.puts (inspect r)
+    {:noreply, state}
+  end
 end

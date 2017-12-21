@@ -5,8 +5,9 @@
     <h4>Active LAN Worlds</h4>
     <ul class="list-group">
       <%= for [_mc, ip, port, motd] <- @servers do %>
+        <% [user, name] = String.split(motd, "-") %>
         <li class="list-group-item">
-          <%= motd %>
+          <h3><%= name %></h3> Hosted by <%= user %>
         <span class="badge"><%= "#{ip}:#{port}"%> </span>
         </li>
       <% end %>
