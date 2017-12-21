@@ -9,9 +9,10 @@ defmodule MCServerFinder.Application do
     # List all child processes to be supervised
     redis_host = Application.get_env(:mcserverfinder, :redis_host, "127.0.0.1")
     redis_port = Application.get_env(:mcserverfinder, :redis_port, 6379)
+    clean_interval = Application.get_env(:mcserverfinder, :interval, 10)
     children = [
       {MCServerFinder, [port: 4445, ip: {224,0,2,60}, redis_host: redis_host, redis_port: redis_port]},
-      {RedisCleaner, [redis_host: redis_host, redis_port: redis_port]}
+      {RedisCleaner, [redis_host: redis_host, redis_port: redis_port, interval: interval]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

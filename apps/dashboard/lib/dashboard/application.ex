@@ -11,7 +11,7 @@ defmodule Dashboard.Application do
       # Start the endpoint when the application starts
       supervisor(DashboardWeb.Endpoint, []),
       # worker(Dashboard.Redis, [redis_host: "127.0.0.1", redis_port: 6379])
-      {Dashboard.Redis, [redis_host: Application.get_env(:dashboard, :redis_host), redis_port: Application.get_env(:dashboard, :redis_port)]}
+      {Dashboard.Redis, [redis_host: Application.get_env(:dashboard, :redis_host, "127.0.0.1"), redis_port: Application.get_env(:dashboard, :redis_port, 6379)]}
       # Start your own worker by calling: Dashboard.Worker.start_link(arg1, arg2, arg3)
       # worker(Dashboard.Worker, [arg1, arg2, arg3]),
     ]
