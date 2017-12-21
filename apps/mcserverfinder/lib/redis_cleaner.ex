@@ -7,8 +7,8 @@ defmodule RedisCleaner do
 
   def init(opts) do
     {:ok, conn} = Redix.start_link(host: Keyword.get(opts, :redis_host), port: Keyword.get(opts, :redis_port))
-    schedule()
     interval = Keyword.get(opts, :interval)
+    schedule(interval)
     {:ok, {conn, interval}}
   end
 

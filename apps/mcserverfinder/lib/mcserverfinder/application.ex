@@ -12,7 +12,7 @@ defmodule MCServerFinder.Application do
     clean_interval = Application.get_env(:mcserverfinder, :interval, 10)
     children = [
       {MCServerFinder, [port: 4445, ip: {224,0,2,60}, redis_host: redis_host, redis_port: redis_port]},
-      {RedisCleaner, [redis_host: redis_host, redis_port: redis_port, interval: interval]}
+      {RedisCleaner, [redis_host: redis_host, redis_port: redis_port, interval: clean_interval]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
