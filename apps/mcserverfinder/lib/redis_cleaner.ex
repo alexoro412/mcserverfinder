@@ -18,7 +18,7 @@ defmodule RedisCleaner do
 
   def handle_info(:clean, {conn, interval}) do
     time = System.os_time(:seconds)
-    {:ok, _} = Redix.command(conn, ["ZREMRANGEBYSCORE", "servers", "-inf", "(#{time-2}"])
+    {:ok, _} = Redix.command(conn, ["ZREMRANGEBYSCORE", "servers", "-inf", "(#{time-60}"])
     schedule(interval)
     {:noreply, {conn, interval}}
   end

@@ -6,6 +6,7 @@ defmodule MCServerFinder do
 	end
 
 	def init(opts) do
+    IO.puts "LAN World Scanner online"
 		{:ok, sock} = :gen_udp.open(Keyword.get(opts, :port),
 			[{:reuseaddr, true},
 			 {:ip, Keyword.get(opts, :ip)},
@@ -22,13 +23,13 @@ defmodule MCServerFinder do
     time = System.os_time(:seconds)
     case Regex.run(~r/\[MOTD\]([^\[]+)\[\/MOTD\]\[AD\](\d+)\[\/AD\]/, packet) do
 			nil ->
-				IO.puts(packet)
+				IO.puts ["unknown: ", inspect packet]
 				{:noreply, {sock, conn}}
 			[_, motd, port] ->
         key_name = "mc:#{i1}.#{i2}.#{i3}.#{i4}:#{port}:#{motd}"
-        IO.puts key_name
+        # IO.puts key_name
         {:ok, _} = Redix.command(conn, ["ZADD", "servers", time, key_name])
-				{:noreply, {sock, conn}}
+        {:noreply, {sock, conn}}
 		end
 	end
 
