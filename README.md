@@ -1,5 +1,7 @@
 # MC LAN Server Finder
 
+This program listens for Minecraft LAN servers, and provides a web dashboard listing them.
+
 ## Configuration
 
 Edit config/config.exs with the following
